@@ -1,14 +1,11 @@
 const path = require('path');
 
 module.exports = {
-  mode: 'development',
+  mode: 'production',
+  output: {
+    path: path.resolve(__dirname, ""),
+  },
   experiments: {
-    // asyncWebAssembly: true,
-    // buildHttp: true,
-    // layers: true,
-    // lazyCompilation: true,
-    // outputModule: true,
-    // syncWebAssembly: true,
     topLevelAwait: true,
   },
 };
