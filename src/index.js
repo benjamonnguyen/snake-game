@@ -28,7 +28,7 @@ document.onkeydown = (key) => {
         || ((game.direction === EDirection.ArrowLeft || game.direction === EDirection.ArrowRight)
             && (newDirection === EDirection.ArrowLeft || newDirection === EDirection.ArrowRight)))
     ) {
-        game.direction = newDirection
+        game.nextDirection = newDirection
     }
 }
 

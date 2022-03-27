@@ -12,6 +12,7 @@ export default class Game {
         this.height = height
 
         this.direction = EDirection.ArrowRight
+        this.nextDirection = this.direction
         this.snake = new Snake()
         this.foodCoord = this.#generateFood()
         this.score = 0
@@ -23,7 +24,8 @@ export default class Game {
     }
 
     #tick() {
-        this.snake.move(this.direction, this.ctx)
+        this.snake.move(this.nextDirection, this.ctx)
+        this.direction = this.nextDirection
         this.#handleFoodLogic()
         if (this.#checkForBoundaryCollision(this.snake.head.coord)
             || this.snake.bodyMapHas(this.snake.head.coord)) {
