@@ -16,19 +16,38 @@ CanvasRenderingContext2D.prototype.roundRect = function (x, y, w, h, r) {
 
 const canvas = document.getElementById("snakeLayer")
 const ctx = canvas.getContext("2d")
-const score = document.getElementById("score")
-score.innerText = "SCORE: 0"
+const winner = document.getElementById("winner")
+const playAgainBtn = document.getElementById("playAgainBtn")
 
-const game = new Game(ctx, score, parseInt(canvas.width), parseInt(canvas.height))
+playAgainBtn.addEventListener('click', startGame)
+
+const game = new Game(ctx, winner, playAgainBtn, parseInt(canvas.width), parseInt(canvas.height))
+
+async function startGame() {
+    winner.innerText = 'snek'
+    playAgainBtn.style.display = 'none'
+    await game.start()
+}
 
 document.onkeydown = (key) => {
     const newDirection = getDirection(key.code)
-    if (!(((game.direction === EDirection.ArrowDown || game.direction === EDirection.ArrowUp)
-        && (newDirection === EDirection.ArrowDown || newDirection === EDirection.ArrowUp))
-        || ((game.direction === EDirection.ArrowLeft || game.direction === EDirection.ArrowRight)
-            && (newDirection === EDirection.ArrowLeft || newDirection === EDirection.ArrowRight)))
-    ) {
-        game.nextDirection = newDirection
+
+    if (newDirection === EDirection.ArrowDown || newDirection === EDirection.ArrowUp) {
+        if (game.direction === EDirection.ArrowLeft || game.direction === EDirection.ArrowRight) {
+            game.nextDirection = newDirection
+        }
+    } else if (newDirection === EDirection.ArrowLeft || newDirection === EDirection.ArrowRight) {
+        if (game.direction === EDirection.ArrowUp || game.direction === EDirection.ArrowDown) {
+            game.nextDirection = newDirection
+        }
+    } else if (newDirection === EDirection.KeyW || newDirection === EDirection.KeyS) {
+        if (game.direction2 === EDirection.KeyA || game.direction2 === EDirection.KeyD) {
+            game.nextDirection2 = newDirection
+        }
+    } else if (newDirection === EDirection.KeyA || newDirection === EDirection.KeyD) {
+        if (game.direction2 === EDirection.KeyS || game.direction2 === EDirection.KeyW) {
+            game.nextDirection2 = newDirection
+        }
     }
 }
 

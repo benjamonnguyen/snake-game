@@ -2,7 +2,11 @@ const EDirection = {
     "ArrowUp": "up",
     "ArrowDown": "down",
     "ArrowLeft": "left",
-    "ArrowRight": "right"
+    "ArrowRight": "right",
+    "KeyW": "w",
+    "KeyS": "s",
+    "KeyA": "a",
+    "KeyD": "d",
 }
 
 function getDirection(key) {

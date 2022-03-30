@@ -7,13 +7,8 @@ export default class Coord {
         this.y = y
     }
 
-    drawRect(r, ctx) {
-        // ctx.fillRect(
-        //     Config.CELL_SIZE * this.x,
-        //     Config.CELL_SIZE * this.y,
-        //     Config.CELL_SIZE,
-        //     Config.CELL_SIZE
-        // )
+    drawRect(color, r, ctx) {
+        ctx.fillStyle = color
         ctx.roundRect(
             Config.CELL_SIZE * this.x,
             Config.CELL_SIZE * this.y,
@@ -30,6 +25,10 @@ export default class Coord {
             Config.CELL_SIZE,
             Config.CELL_SIZE
         )
+    }
+
+    toString() {
+        return this.x + ',' + this.y
     }
 
 }
