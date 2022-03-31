@@ -4,14 +4,13 @@ import Snake from "./Snake"
 
 export default class Snake2 extends Snake {
 
-    constructor() {
-        super()
-        this.color = "#f4deb3"
+    constructor(color, direction) {
+        super(color, direction)
     }
 
     initialize(ctx) {
-        let x = 28
-        const y = 17
+        let x = 26
+        const y = 14
         let currSegment = new Segment(new Coord(x, y), null)
         let segmentCount = 1
         this.tail = currSegment

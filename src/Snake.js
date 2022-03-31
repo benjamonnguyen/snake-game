@@ -5,26 +5,28 @@ import Config from "./config"
 
 export default class Snake {
 
-    constructor() {
+    constructor(color, direction) {
         this.body = new Set()
-        this.color = "#101f15"
+        this.score = 0
+        this.color = color
+        this.direction = direction
+        this.nextDirection = this.direction
     }
 
     initialize(ctx) {
-        let x = 6
+        let x = 2
         const y = 5
         let prevSegment = null
         let currSegment = new Segment(new Coord(x, y), prevSegment)
-        let segmentCount = 1
-        this.head = currSegment
-        while (segmentCount < 5) {
-            prevSegment = currSegment
-            currSegment = new Segment(new Coord(--x, y), prevSegment)
-            segmentCount++
-        }
+        this.segmentCount = 1
 
         this.tail = currSegment
-        this.segmentCount = segmentCount
+        while (this.segmentCount < 5) {
+            currSegment.next = new Segment(new Coord(++x, y), null)
+            currSegment = currSegment.next
+            this.segmentCount++
+        }
+        this.head = currSegment
 
         this.render(ctx)
     }

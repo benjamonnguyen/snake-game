@@ -1,4 +1,5 @@
 import Game from "./Game"
+import Local2PGame from "./Local2PGame"
 import { getDirection, EDirection } from "./direction"
 
 CanvasRenderingContext2D.prototype.roundRect = function (x, y, w, h, r) {
@@ -16,16 +17,23 @@ CanvasRenderingContext2D.prototype.roundRect = function (x, y, w, h, r) {
 
 const canvas = document.getElementById("snakeLayer")
 const ctx = canvas.getContext("2d")
-const winner = document.getElementById("winner")
-const playAgainBtn = document.getElementById("playAgainBtn")
+const singleBtn = document.getElementById("1p")
+const localBtn = document.getElementById("2pLocal")
+const infoDisplay = document.getElementById("info")
 
-playAgainBtn.addEventListener('click', startGame)
-
-const game = new Game(ctx, winner, playAgainBtn, parseInt(canvas.width), parseInt(canvas.height))
+let game
+singleBtn.addEventListener('click', async () => {
+    game = new Game(ctx, infoDisplay, singleBtn, localBtn, parseInt(canvas.width), parseInt(canvas.height))
+    await startGame() 
+})
+localBtn.addEventListener('click', async () => {
+    game = new Local2PGame(ctx, infoDisplay, singleBtn, localBtn, parseInt(canvas.width), parseInt(canvas.height))
+    await startGame()
+})
 
 async function startGame() {
-    winner.innerText = 'snek'
-    playAgainBtn.style.display = 'none'
+    singleBtn.style.display = 'none'
+    localBtn.style.display = 'none'
     await game.start()
 }
 
@@ -33,22 +41,20 @@ document.onkeydown = (key) => {
     const newDirection = getDirection(key.code)
 
     if (newDirection === EDirection.ArrowDown || newDirection === EDirection.ArrowUp) {
-        if (game.direction === EDirection.ArrowLeft || game.direction === EDirection.ArrowRight) {
-            game.nextDirection = newDirection
+        if (game.snake.direction === EDirection.ArrowLeft || game.snake.direction === EDirection.ArrowRight) {
+            game.snake.nextDirection = newDirection
         }
     } else if (newDirection === EDirection.ArrowLeft || newDirection === EDirection.ArrowRight) {
-        if (game.direction === EDirection.ArrowUp || game.direction === EDirection.ArrowDown) {
-            game.nextDirection = newDirection
+        if (game.snake.direction === EDirection.ArrowUp || game.snake.direction === EDirection.ArrowDown) {
+            game.snake.nextDirection = newDirection
         }
     } else if (newDirection === EDirection.KeyW || newDirection === EDirection.KeyS) {
-        if (game.direction2 === EDirection.KeyA || game.direction2 === EDirection.KeyD) {
-            game.nextDirection2 = newDirection
+        if (game.snake2.direction === EDirection.KeyA || game.snake2.direction === EDirection.KeyD) {
+            game.snake2.nextDirection = newDirection
         }
     } else if (newDirection === EDirection.KeyA || newDirection === EDirection.KeyD) {
-        if (game.direction2 === EDirection.KeyS || game.direction2 === EDirection.KeyW) {
-            game.nextDirection2 = newDirection
+        if (game.snake.direction === EDirection.KeyS || game.snake2.direction === EDirection.KeyW) {
+            game.snake2.nextDirection = newDirection
         }
     }
 }
-
-await game.start()
