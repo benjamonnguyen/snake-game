@@ -1,1 +1,1 @@
-benjamonnguyen.github.io/snake-game
+https://benjamonnguyen.github.io/snake-game/
